@@ -1,10 +1,7 @@
-Boilerplate for Python projects
+Python wrapper for yandex Tomita Parser
 =====================
 
-All the cool practices in one place.
-
-- can be installed as pypi package
-- easy to test
+*Work in progress ...*
 
 Usage:
 ------
