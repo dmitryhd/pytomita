@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 
 import os
 import os.path as path
 from io import open
-from contextlib import suppress
 import subprocess
 from collections import defaultdict
 
@@ -11,10 +12,6 @@ import xml.etree.ElementTree
 
 
 class TomitaParser(object):
-    """
-    Usage:
-    """
-    # TODO: write simplest example possible.
 
     def __init__(self, directory='.'):
         self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
@@ -143,5 +140,7 @@ class TomitaParser(object):
             path.join(self.base_dir, 'dict.gzt.bin'),
         ]
         for file in files_to_delete:
-            with suppress(FileNotFoundError):
+            try:
                 os.unlink(file)
+            except FileNotFoundError:
+                pass
