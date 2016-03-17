@@ -101,7 +101,6 @@ with io.open('requirements.cxx', 'w') as f:
 
     S -> CAT DCI (DELIM) (DCI) (DELIM) (DCI);
 
-
     ''')
 
 # !/usr/local/bin/tomita-parser config.proto
@@ -115,31 +114,3 @@ values = []
 for document in root.findall('document'):
     values.append([child.find('Category').attrib.get('val') for child in document.find('facts').findall('DrivingLicense')])
 
-class TomitaParser(object):
-    def __init__(self, directory='/tmp/'):
-        self.tomita_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
-        pass
-
-    def set_possible_facts(self):
-        pass
-
-    def set_main_config(self): # conf 1
-        pass
-
-    def set_documents(self, stings):
-        pass
-
-    def parse(self):
-        return [[], []]
-
-    def set_gazeteer(self):  # gzt 1
-        pass
-
-    def set_article(self): # cxx files, N
-        pass
-
-    def set_kwtypes_my(self):
-        pass
-
-    def set_facttypes(self):
-        pass
