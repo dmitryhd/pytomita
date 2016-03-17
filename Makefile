@@ -4,7 +4,7 @@ MODULE = tomita
 TEST_RUNNER = nosetests-3.4
 
 # For python2
-#TEST_RUNNER = nosetests
+# TEST_RUNNER = nosetests
 
 all: test
 

@@ -7,7 +7,6 @@ import os.path as path
 from io import open
 import subprocess
 from collections import defaultdict
-
 import xml.etree.ElementTree
 
 
@@ -31,7 +30,8 @@ class TomitaParser(object):
             fd.write(facts)
 
     def set_keywords(self, keywords):
-        keywords = u'import "base.proto"; import "articles_base.proto"; ' + keywords
+        keywords = u'import "base.proto"; import "articles_base.proto"; ' + \
+                   keywords
         with open(self.keywords_file, 'w') as fd:
             fd.write(keywords)
 
@@ -89,6 +89,7 @@ class TomitaParser(object):
                 universal_newlines=True,
                 stderr=subprocess.STDOUT
             )
+        # except subprocess.CalledProcessError:
         finally:
             os.chdir(original_dir)
         success = 'End.  (Processing files.)' in output
@@ -100,7 +101,7 @@ class TomitaParser(object):
 
     def parse(self, fact_descriptions):
         """
-        :param: facts: {'DrivingLicense': ['Category']}
+        :param fact_descriptions: {'DrivingLicense': ['Category']}
         :return: dict with keys as document id numbers.
         If document doesn't contain facts it just skipped in dictionary
 
@@ -117,7 +118,7 @@ class TomitaParser(object):
             doc_facts[document_id] = defaultdict(list)
             facts = document.find('facts')
             for fact_name in fact_descriptions:
-                attributes = facts.findall(fact_name)  # DrivingLicense
+                attributes = facts.findall(fact_name)
                 for attr in attributes:
                     for attribute_name in fact_descriptions[fact_name]:
                         value = attr.find(attribute_name).attrib.get('val')
@@ -142,5 +143,5 @@ class TomitaParser(object):
         for file in files_to_delete:
             try:
                 os.unlink(file)
-            except FileNotFoundError:
+            except OSError:
                 pass

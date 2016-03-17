@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 import os.path as path
 import unittest
@@ -51,14 +52,14 @@ class TestParser(unittest.TestCase):
         S -> CAT DCI (DELIM) (DCI) (DELIM) (DCI);
         '''
         self.documents = [
-            'Требуется водитель с категориями "С", "Е"',
-            'категория с,д',
-            'категория Е',
-            'права категории В',
-            'права категории В A D',
-            'кат А Б Е',
-            'ничего тут нет',
-            'кат A B C Д',
+            u'Требуется водитель с категориями "С", "Е"',
+            u'категория с,д',
+            u'категория Е',
+            u'права категории В',
+            u'права категории В A D',
+            u'кат А Б Е',
+            u'ничего тут нет',
+            u'кат A B C Д',
         ]
 
     def tearDown(self):
@@ -121,11 +122,11 @@ class TestParser(unittest.TestCase):
         fact_descriptions = {'DrivingLicense': ['Category']}
         res = parser.parse(fact_descriptions)
         expected_result = {
-            1: {'Category': ['C', 'СE']},
-            2: {'Category': ['C', 'D']},
-            3: {'Category': ['СE']},
-            4: {'Category': ['B']},
-            5: {'Category': ['B', 'A', 'D']},
-            6: {'Category': ['A', 'B', 'СE']},
-            8: {'Category': ['A', 'B', 'C']}}
+            1: {'Category': [u'C', u'СE']},
+            2: {'Category': [u'C', u'D']},
+            3: {'Category': [u'СE']},
+            4: {'Category': [u'B']},
+            5: {'Category': [u'B', u'A', u'D']},
+            6: {'Category': [u'A', u'B', u'СE']},
+            8: {'Category': [u'A', u'B', u'C']}}
         self.assertEqual(res, expected_result)
