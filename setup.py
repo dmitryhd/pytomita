@@ -7,15 +7,14 @@ def read(fname):
 
 
 setup(
-    name = "module",
-    version = "0.0.1",
+    name = "pytomita",
+    version = "0.1",
     author = "Dmitry Khodakov",
     author_email = "dmitryhd@gmail.com",
-    description = ("An demonstration of how to create, document, and publish "
-                   "to the cheese shop a5 pypi.org."),
+    description = ("pyton wrapper for yandex tomita-parser"),
     license = "BSD",
-    keywords = "example documentation tutorial",
-    packages=['module', 'tests'],
+    keywords = "",
+    packages=['tests'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 3 - Alpha",
