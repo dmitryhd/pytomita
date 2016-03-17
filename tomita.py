@@ -16,8 +16,8 @@ class TomitaParser(object):
     """
     # TODO: write simplest example possible.
 
-    def __init__(self, directory='/tmp'):
-        self.tomita_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
+    def __init__(self, directory='.'):
+        self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
         self.base_dir = directory
         self.facts_file = path.join(self.base_dir, 'facttypes.proto')
         self.keywords_file = path.join(self.base_dir, 'kwtypes.proto')
@@ -29,29 +29,57 @@ class TomitaParser(object):
         # TODO: mkdir if not exists.
 
     def set_facts(self, facts):
+        facts = u'import "base.proto"; import "facttypes_base.proto"; ' + facts
         with open(self.facts_file, 'w') as fd:
             fd.write(facts)
 
     def set_keywords(self, keywords):
+        keywords = u'import "base.proto"; import "articles_base.proto"; ' + keywords
         with open(self.keywords_file, 'w') as fd:
             fd.write(keywords)
 
     def set_gazetteer(self, gazetteer):
+        gazetteer = u'''
+        encoding "utf8";
+        import "base.proto";
+        import "articles_base.proto";
+        import "kwtypes.proto";
+        import "facttypes.proto";
+        ''' + gazetteer
         with open(self.gazetteer_file, 'w') as fd:
             fd.write(gazetteer)
 
     def set_config(self, config):
+        config_template = u'''
+            encoding "utf8";
+            TTextMinerConfig {
+              Dictionary = "dict.gzt";
+              Input = {
+                File = "documents_dlp.txt"; // файл с анализируемым текстом
+                Type = dpl;                 // режим чтения
+              }
+
+            // Articles and Facts begins:
+        ''' + config + u'''
+            // Articles and Facts end.
+
+              Output = {
+                File = "facts.xml";
+              }
+            }
+        '''
         with open(self.config_file, 'w') as fd:
-            fd.write(config)
+            fd.write(config_template)
 
     def set_requirements(self, requirements):
+        requirements = u'#encoding "utf-8" \n' + requirements
         with open(self.requirements_file, 'w') as fd:
             fd.write(requirements)
 
     def set_documents(self, documents):
         with open(self.documents_file, 'w') as fd:
-            # TODO: strip newlines
             for doc in documents:
+                doc = doc.replace('\n', ' ')
                 fd.write(doc + '\n')
 
     def run(self):
@@ -59,7 +87,7 @@ class TomitaParser(object):
         try:
             os.chdir(self.base_dir)
             output = subprocess.check_output(
-                self.tomita_path + ' ' + 'config.proto',
+                self.binary_path + ' ' + 'config.proto',
                 shell=True,
                 universal_newlines=True,
                 stderr=subprocess.STDOUT

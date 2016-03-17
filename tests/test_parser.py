@@ -13,20 +13,10 @@ class TestParser(unittest.TestCase):
 
     def setUp(self):
         self.facts = u"""
-        import "base.proto";
-        import "facttypes_base.proto";
         message DrivingLicense: NFactType.TFact { required string Category = 1; }
         """
-        self.keywords = u'''import "base.proto";
-        import "articles_base.proto";
-        message driving_cat : TAuxDicArticle {};
-        '''
-        self.gazetteer =u'''encoding "utf8";
-        import "base.proto";
-        import "articles_base.proto";
-        import "kwtypes.proto";
-        import "facttypes.proto";
-
+        self.keywords = u'message driving_cat : TAuxDicArticle {};'
+        self.gazetteer =u'''
         TAuxDicArticle "Требования"
         {
             key = { "tomita:requirements.cxx" type=CUSTOM }
@@ -44,14 +34,6 @@ class TestParser(unittest.TestCase):
         driving_cat "D1E" { key = "D1E" | "Д1Е" lemma="D1E" }
         '''
         self.config = u"""
-        encoding "utf8";
-        TTextMinerConfig {
-          Dictionary = "dict.gzt";       // корневой словарь газеттира
-          Input = {
-            File = "documents_dlp.txt";          // файл с анализируемым текстом
-            Type = dpl;                 // режим чтения
-          }
-
           Articles = [
             { Name = "Требования" }       // Запустить статью корневого словаря
           ]
@@ -59,12 +41,8 @@ class TestParser(unittest.TestCase):
             { Name = "ExpFact" }
             { Name = "DrivingLicense" }
           ]
-          Output = {
-            File = "facts.xml";
-          }
-        }
         """
-        self.requirements = u'''#encoding "utf-8"
+        self.requirements = u'''
         #GRAMMAR_ROOT S
         DC -> AnyWord<kwtype=driving_cat,quoted> | AnyWord<kwtype=driving_cat>;
         DCI -> DC interp (DrivingLicense.Category);
@@ -90,7 +68,7 @@ class TestParser(unittest.TestCase):
     def test_set_facts(self):
         parser = tomita.TomitaParser()
         parser.set_facts(self.facts)
-        self.assertEqual(parser.base_dir, '/tmp')
+        self.assertEqual(parser.base_dir, '.')
         fact_path = path.join(parser.base_dir, 'facttypes.proto')
         self.assertTrue(path.isfile(fact_path))
 
