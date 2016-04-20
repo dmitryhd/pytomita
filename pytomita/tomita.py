@@ -12,6 +12,9 @@ import xml.etree.ElementTree
 
 class TomitaParser(object):
 
+    # TODO: remove some symbols from documents \r, \t, \. \, ...
+    # TODO: generate fact_descriptions by fact file
+
     def __init__(self, directory='.'):
         self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
         self.base_dir = directory
@@ -26,13 +29,13 @@ class TomitaParser(object):
 
     def set_facts(self, facts):
         facts = u'import "base.proto"; import "facttypes_base.proto"; ' + facts
-        with open(self.facts_file, 'w') as fd:
+        with open(self.facts_file, 'w', encoding='utf8') as fd:
             fd.write(facts)
 
     def set_keywords(self, keywords):
         keywords = u'import "base.proto"; import "articles_base.proto"; ' + \
                    keywords
-        with open(self.keywords_file, 'w') as fd:
+        with open(self.keywords_file, 'w', encoding='utf8') as fd:
             fd.write(keywords)
 
     def set_gazetteer(self, gazetteer):
@@ -43,7 +46,7 @@ class TomitaParser(object):
         import "kwtypes.proto";
         import "facttypes.proto";
         ''' + gazetteer
-        with open(self.gazetteer_file, 'w') as fd:
+        with open(self.gazetteer_file, 'w', encoding='utf8') as fd:
             fd.write(gazetteer)
 
     def set_config(self, config):
@@ -65,18 +68,18 @@ class TomitaParser(object):
               }
             }
         '''
-        with open(self.config_file, 'w') as fd:
+        with open(self.config_file, 'w', encoding='utf8') as fd:
             fd.write(config_template)
 
     def set_fact_file(self, fact_desc, file_name):
         requirements = u'#encoding "utf-8" \n' + fact_desc
         fact_file_path = path.join(self.base_dir, file_name)
         self.fact_files.append(file_name)
-        with open(fact_file_path, 'w') as fd:
+        with open(fact_file_path, 'w', encoding='utf8') as fd:
             fd.write(requirements)
 
     def set_documents(self, documents):
-        with open(self.documents_file, 'w') as fd:
+        with open(self.documents_file, 'w', encoding='utf8') as fd:
             for doc in documents:
                 doc = doc.replace('\n', ' ')
                 fd.write(doc + '\n')
