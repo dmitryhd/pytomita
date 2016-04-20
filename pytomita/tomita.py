@@ -14,6 +14,7 @@ class TomitaParser(object):
 
     # TODO: remove some symbols from documents \r, \t, \. \, ...
     # TODO: generate fact_descriptions by fact file
+    # TODO: return dataframe with Fact_Property: ('a', 'b')
 
     def __init__(self, directory='.', num_threads=2):
         self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'

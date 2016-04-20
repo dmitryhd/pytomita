@@ -14,6 +14,14 @@ Can be used in both Python2.7 and Python3.5
 
 `pip install ./pytomita`
 
+TODO:
+------
+
+- [ ] remove some symbols from documents \r, \t, \. \, ...
+- [ ] generate fact_descriptions by fact file
+- [ ] return dataframe with `'Fact_Property': ('a', 'b')`
+- [ ] return dict: `{document_id: {'fact': {'property': ('a', 'b')}}}`
+
 Example:
 --------
 
