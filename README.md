@@ -20,7 +20,7 @@ Example:
 ```python
 # -*- coding: utf-8 -*-
 
-import tomita
+from pytomita import tomita
 
 
 fact_descriptions = {'DrivingLicense': ['Category']}
