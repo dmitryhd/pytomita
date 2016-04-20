@@ -19,9 +19,9 @@ class TomitaParser(object):
         self.keywords_file = path.join(self.base_dir, 'kwtypes.proto')
         self.gazetteer_file = path.join(self.base_dir, 'dict.gzt')
         self.config_file = path.join(self.base_dir, 'config.proto')
-        self.requirements_file = path.join(self.base_dir, 'requirements.cxx')
         self.documents_file = path.join(self.base_dir, 'documents_dlp.txt')
         self.output_file = path.join(self.base_dir, 'facts.xml')
+        self.fact_files = []
         # TODO: mkdir if not exists.
 
     def set_facts(self, facts):
@@ -68,9 +68,11 @@ class TomitaParser(object):
         with open(self.config_file, 'w') as fd:
             fd.write(config_template)
 
-    def set_requirements(self, requirements):
-        requirements = u'#encoding "utf-8" \n' + requirements
-        with open(self.requirements_file, 'w') as fd:
+    def set_fact_file(self, fact_desc, file_name):
+        requirements = u'#encoding "utf-8" \n' + fact_desc
+        fact_file_path = path.join(self.base_dir, file_name)
+        self.fact_files.append(file_name)
+        with open(fact_file_path, 'w') as fd:
             fd.write(requirements)
 
     def set_documents(self, documents):
@@ -89,7 +91,6 @@ class TomitaParser(object):
                 universal_newlines=True,
                 stderr=subprocess.STDOUT
             )
-        # except subprocess.CalledProcessError:
         finally:
             os.chdir(original_dir)
         success = 'End.  (Processing files.)' in output
@@ -133,13 +134,15 @@ class TomitaParser(object):
             self.keywords_file,
             self.gazetteer_file,
             self.config_file,
-            self.requirements_file,
             self.documents_file,
             self.output_file,
             path.join(self.base_dir, 'requirements.bin'),
             path.join(self.base_dir, 'dict.gzt.bin'),
             path.join(self.base_dir, 'dict.gzt.bin'),
         ]
+
+        files_to_delete.extend(
+            [path.join(self.base_dir, file) for file in self.fact_files])
         for file in files_to_delete:
             try:
                 os.unlink(file)

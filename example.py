@@ -40,7 +40,7 @@ parser.set_facts(facts)
 parser.set_config(config)
 parser.set_keywords(keywords)
 parser.set_gazetteer(gazetteer)
-parser.set_requirements(requirements)
+parser.set_fact_file(requirements, 'requirements.cxx')
 
 # Pass data
 documents = [

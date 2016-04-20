@@ -14,10 +14,11 @@ class TestParser(unittest.TestCase):
 
     def setUp(self):
         self.facts = u"""
-        message DrivingLicense: NFactType.TFact { required string Category = 1; }
+        message DrivingLicense: NFactType.TFact
+        { required string Category = 1; }
         """
         self.keywords = u'message driving_cat : TAuxDicArticle {};'
-        self.gazetteer =u'''
+        self.gazetteer = u'''
         TAuxDicArticle "Требования"
         {
             key = { "tomita:requirements.cxx" type=CUSTOM }
@@ -88,10 +89,18 @@ class TestParser(unittest.TestCase):
         parser.set_config(self.config)
         self.assertTrue(path.isfile(parser.config_file))
 
-    def test_set_requirements(self):
+    def test_set_fact(self):
         parser = tomita.TomitaParser()
-        parser.set_requirements(self.requirements)
-        self.assertTrue(path.isfile(parser.requirements_file))
+        fpath = path.join(parser.base_dir, 'requirements.cxx')
+        parser.set_fact_file(self.requirements, 'requirements.cxx')
+        self.assertEqual(parser.fact_files, ['requirements.cxx'])
+        self.assertTrue(path.isfile(fpath))
+
+        fpath = path.join(parser.base_dir, 'requirements2.cxx')
+        parser.set_fact_file(self.requirements, 'requirements2.cxx')
+        self.assertEqual(parser.fact_files,
+                         ['requirements.cxx', 'requirements2.cxx'])
+        self.assertTrue(path.isfile(fpath))
 
     def test_set_documents(self):
         parser = tomita.TomitaParser()
@@ -104,7 +113,7 @@ class TestParser(unittest.TestCase):
         parser.set_config(self.config)
         parser.set_keywords(self.keywords)
         parser.set_gazetteer(self.gazetteer)
-        parser.set_requirements(self.requirements)
+        parser.set_fact_file(self.requirements, 'requirements.cxx')
         parser.set_documents(self.documents)
         return parser
 
