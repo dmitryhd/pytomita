@@ -8,13 +8,13 @@ def read(fname):
 
 setup(
     name = "pytomita",
-    version = "0.1",
+    version = "0.2",
     author = "Dmitry Khodakov",
     author_email = "dmitryhd@gmail.com",
-    description = ("pyton wrapper for yandex tomita-parser"),
+    description = ("python wrapper for yandex tomita-parser"),
     license = "BSD",
     keywords = "",
-    packages=['tests'],
+    packages=['pytomita'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 3 - Alpha",

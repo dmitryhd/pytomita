@@ -7,7 +7,7 @@ import unittest
 current_dir = path.dirname(path.realpath(__file__))
 sys.path.append(path.join(current_dir, '..'))
 
-import tomita
+import pytomita.tomita as tomita
 
 
 class TestParser(unittest.TestCase):
