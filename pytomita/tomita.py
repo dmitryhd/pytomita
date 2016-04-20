@@ -15,7 +15,7 @@ class TomitaParser(object):
     # TODO: remove some symbols from documents \r, \t, \. \, ...
     # TODO: generate fact_descriptions by fact file
 
-    def __init__(self, directory='.'):
+    def __init__(self, directory='.', num_threads=2):
         self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
         self.base_dir = directory
         self.facts_file = path.join(self.base_dir, 'facttypes.proto')
@@ -25,6 +25,7 @@ class TomitaParser(object):
         self.documents_file = path.join(self.base_dir, 'documents_dlp.txt')
         self.output_file = path.join(self.base_dir, 'facts.xml')
         self.fact_files = []
+        self.num_threads = num_threads
         # TODO: mkdir if not exists.
 
     def set_facts(self, facts):
@@ -60,12 +61,12 @@ class TomitaParser(object):
               }
 
             // Articles and Facts begins:
-        ''' + config + u'''
+        ''' + config + '\n' + 'NumThreads = {};\n'.format(self.num_threads) \
+                          + u'''
             // Articles and Facts end.
-
-              Output = {
-                File = "facts.xml";
-              }
+                Output = {
+                    File = "facts.xml";
+                }
             }
         '''
         with open(self.config_file, 'w', encoding='utf8') as fd:
