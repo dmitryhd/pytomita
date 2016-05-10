@@ -90,12 +90,17 @@ class TomitaParser(object):
         original_dir = os.getcwd()
         try:
             os.chdir(self.base_dir)
-            output = subprocess.check_output(
-                self.binary_path + ' ' + 'config.proto',
-                shell=True,
-                universal_newlines=True,
-                stderr=subprocess.STDOUT
-            )
+            try:
+                output = subprocess.check_output(
+                    self.binary_path + ' ' + 'config.proto',
+                    shell=True,
+                    universal_newlines=True,
+                    stderr=subprocess.STDOUT,
+                )
+            except subprocess.CalledProcessError as e:
+                print('Got exception {}'.format(e))
+                print('Tomita output {}'.format(e.output))
+                return False
         finally:
             os.chdir(original_dir)
         success = 'End.  (Processing files.)' in output

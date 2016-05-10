@@ -1,6 +1,8 @@
 Python wrapper for Yandex tomita-parser
 =====================
 
+Can be used in both Python2.7 and Python3.5
+
 Usage:
 ------
 
@@ -10,9 +12,10 @@ Usage:
 Installation:
 ------
 
-Can be used in both Python2.7 and Python3.5
+Install tomita parser: https://github.com/yandex/tomita-parser
 
 `pip install ./pytomita`
+
 
 TODO:
 ------
