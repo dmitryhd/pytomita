@@ -19,7 +19,6 @@ Install tomita parser: https://github.com/yandex/tomita-parser
 
 TODO:
 ------
-
 - [ ] remove some symbols from documents \r, \t, \. \, ...
 - [ ] generate fact_descriptions by fact file
 - [ ] return dataframe with `'Fact_Property': ('a', 'b')`

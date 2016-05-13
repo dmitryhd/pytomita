@@ -87,6 +87,15 @@ class TomitaParser(object):
                 fd.write(doc + '\n')
 
     def run(self):
+        """
+        deletes output file and creates new
+        :raises: subprocess.CalledProcessError if tomita parser failed
+        :returns: True if run was successful
+        """
+        try:
+            os.unlink(self.output_file)
+        except FileNotFoundError:
+            pass
         original_dir = os.getcwd()
         try:
             os.chdir(self.base_dir)
@@ -100,7 +109,7 @@ class TomitaParser(object):
             except subprocess.CalledProcessError as e:
                 print('Got exception {}'.format(e))
                 print('Tomita output {}'.format(e.output))
-                return False
+                raise e
         finally:
             os.chdir(original_dir)
         success = 'End.  (Processing files.)' in output
