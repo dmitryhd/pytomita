@@ -92,10 +92,8 @@ class TomitaParser(object):
         :raises: subprocess.CalledProcessError if tomita parser failed
         :returns: True if run was successful
         """
-        try:
+        if os.path.isfile(self.output_file):
             os.unlink(self.output_file)
-        except FileNotFoundError:
-            pass
         original_dir = os.getcwd()
         try:
             os.chdir(self.base_dir)
