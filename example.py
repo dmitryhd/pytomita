@@ -35,7 +35,7 @@ S -> CAT DCI (DELIM) (DCI) (DELIM) (DCI);
 '''
 
 # Setup
-parser = tomita.TomitaParser()
+parser = tomita.TomitaParser('/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser')
 parser.set_facts(facts)
 parser.set_config(config)
 parser.set_keywords(keywords)
