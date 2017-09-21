@@ -16,8 +16,8 @@ class TomitaParser(object):
     # TODO: generate fact_descriptions by fact file
     # TODO: return dataframe with Fact_Property: ('a', 'b')
 
-    def __init__(self, directory='.', num_threads=2):
-        self.binary_path = '/home/dkhodakov/build/tomita-parser/build/bin/tomita-parser'
+    def __init__(self, binary_path, directory='.', num_threads=2):
+        self.binary_path = binary_path
         self.base_dir = directory
         self.facts_file = path.join(self.base_dir, 'facttypes.proto')
         self.keywords_file = path.join(self.base_dir, 'kwtypes.proto')
